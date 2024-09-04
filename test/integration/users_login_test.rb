@@ -44,7 +44,7 @@ class ValidLoginTest < ValidLogin
   test "redirect after login" do
     follow_redirect!
     assert_template 'users/show'
-    assert_select "a[href=?]", login_path, count:0
+    assert_select "a[href=?]", login_path, count: 0
     assert_select "a[href=?]", logout_path
     assert_select "a[href=?]", user_path(@user)
   end
@@ -69,8 +69,8 @@ class LogoutTest < Logout
   test "redirect after logout" do
     follow_redirect!
     assert_select "a[href=?]", login_path
-    assert_select "a[href=?]", logout_path,      count:0
-    assert_select "a[href=?]", user_path(@user), count:0
+    assert_select "a[href=?]", logout_path,      count: 0
+    assert_select "a[href=?]", user_path(@user), count: 0
   end
 
   test "should still work after logout in second window" do
@@ -85,7 +85,7 @@ class RememberingTest < UsersLogin
     log_in_as(@user, remember_me: '1')
     assert_not cookies[:remember_token].blank?
   end
-  
+
   test "login without remembering" do
     # Cookieを保存してログイン
     log_in_as(@user, remember_me: '1')
