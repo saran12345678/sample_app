@@ -32,7 +32,7 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -77,8 +77,16 @@ Rails.application.configure do
 
   config.action_cable.allowed_request_origins = ["https://#{pf_host}"]
 
-  config.action_mailer.raise_delivery_errors = false
-
-  host = 'curly-fiesta-gvx96rqr57vc99p6-3000.app.github.dev'
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  host = 'http://57.180.106.80'
+  config.action_mailer.default_url_options = { host: host }
+  ActionMailer::Base.smtp_settings = {
+    :port           => 587,
+    :address        => 'smtp.mailgun.org',
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => host,
+    :authentication => :plain,
+  }
 end
